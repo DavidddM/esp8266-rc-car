@@ -7,10 +7,12 @@ import sys
 class Remote():
 	__possible_keys = ['a', 'w', 's', 'd']
 	__signals = {'up': '-', 'down': '+'}
+	__states = {'+': True, '-': False}
 	def __init__(self, udp_ip, udp_port):
 		self.udp_ip = udp_ip
 		self.udp_port = udp_port
-		self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		self.a = self.d = self.w = self.s = False
 
 	def start(self):
 		self.done = False
