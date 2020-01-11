@@ -2,6 +2,7 @@ import signal
 import keyboard
 import time
 import socket
+import sys
 
 class Remote():
 	__possible_keys = ['a', 'w', 's', 'd']
@@ -23,8 +24,8 @@ class Remote():
 
 	def my_on_key_event(self, e):
 		if e.name in Remote.__possible_keys:
-			print(str(e))
 			self.s.sendto('{0}{1}'.format(e.name, Remote.__signals[e.event_type]).encode(), (self.udp_ip, self.udp_port))
-    
-remote = Remote("192.168.0.100", 2048)
+			print('sending {0}{1}'.format(e.name, Remote.__signals[e.event_type]).encode(), (self.udp_ip, self.udp_port))
+			
+remote = Remote(sys.argv[1], int(sys.argv[2]))
 remote.start()
