@@ -1,9 +1,15 @@
 import network
 from machine import Pin
 import usocket as socket
+import json
 
-ssid='-'
-password='-'
+auth_dict = dict()
+
+with open("auth.json") as f:
+    auth_dict = json.loads(f.read())    
+
+ssid = auth_dict['ssid']
+password = auth_dict['password']
 
 station = network.WLAN(network.STA_IF)
 station.active(True)
@@ -31,6 +37,6 @@ while True:
     send_data = data
     data = data.decode('utf-8')
     print(data)
-    keys_dict[data[0]].value(value_dict[data[1]])
-    print('key: {0}\nvalue: {1}'.format(keys_dict[data[0]], value_dict[data[1]]))
+    keys_dict[data[:-1]].value(value_dict[data[-1]])
+    print('key: {0}\nvalue: {1}'.format(keys_dict[data[:-1]], value_dict[data[-1]]))
     s.sendto(send_data, addr)
