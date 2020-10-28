@@ -3,9 +3,10 @@ import keyboard
 import time
 import socket
 import sys
+from time import sleep
 
 class Remote():
-	__possible_keys = ['a', 'w', 's', 'd']
+	__possible_keys = ['a', 'w', 's', 'd', 'n', 'p']
 	__signals = {'up': '-', 'down': '+'}
 	def __init__(self, udp_ip, udp_port):
 		self.udp_ip = udp_ip
